@@ -26,6 +26,16 @@
 
 [mouseover/mouseout 与 mouseenter/mouseleave 的区别与联系](#jump12)
 
+[offsetWidth/offsetHeight,clientWidth/clientHeight 与 scrollWidth/scrollHeight 的区别](#jump13)
+
+[区分什么是“客户区坐标”、“页面坐标”、“屏幕坐标”](#jump14)
+
+[attribute 和 property 的区别是什么？](#jump15)
+
+[](#jump)
+
+[](#jump)
+
 ---
 
 <span id="jump1"></span>
@@ -261,3 +271,41 @@ IE: 使用 fireEvent 方法
 - mouseover/mouseout 是标准事件，所有浏览器都支持；mouseenter/mouseleave 是 IE5.5 引入的特有事件后来被 DOM3 标准采纳，现代标准浏览器也支持
 
 - mouseover/mouseout 是冒泡事件；mouseenter/mouseleave不冒泡。需要为多个元素监听鼠标移入/出事件时，推荐 mouseover/mouseout 托管，提高性能
+
+---
+
+<span id="jump13"></span>
+
+## offsetWidth/offsetHeight,clientWidth/clientHeight 与 scrollWidth/scrollHeight 的区别
+
+- offsetWidth/offsetHeight 返回值包含 content + padding + border，效果与 e.getBoundingClientRect()相同
+
+- clientWidth/clientHeight 返回值只包含 content + padding，如果有滚动条，也不包含滚动条
+
+- scrollWidth/scrollHeight 返回值包含 content + padding + 溢出内容的尺寸
+
+---
+
+<span id="jump14"></span>
+
+## 区分什么是“客户区坐标”、“页面坐标”、“屏幕坐标”
+
+- 客户区坐标：鼠标指针在可视区中的水平坐标(clientX)和垂直坐标(clientY)相对于浏览器的左上定点为原点
+
+- 页面坐标：鼠标指针在页面布局中的水平坐标(pageX)和垂直坐标(pageY)相对于Document对象即文档窗口的左上顶点为坐标原点
+
+- 屏幕坐标：设备物理屏幕的水平坐标(screenX)和垂直坐标(screenY)
+
+---
+
+<span id="jump15"></span>
+
+## attribute 和 property 的区别是什么？
+
+attribute 是 dom 元素在文档中作为 html 标签拥有的属性；
+
+property 就是 dom 元素在 js 中作为对象拥有的属性。
+
+对于 html 的标准属性来说，attribute 和 property 是同步的，是会自动更新的
+
+但是对于自定义的属性来说，他们是不同步的

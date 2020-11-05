@@ -10,7 +10,7 @@
 
 [js 延迟加载的方式有哪些](#jump4)
 
-[](#jump)
+[script的defer和async](#jump5)
 
 [](#jump)
 
@@ -54,7 +54,7 @@
 
 - Promises 对象
 
-- Async 函数[ES7]
+- Async 函数
 
 ---
 
@@ -92,11 +92,24 @@
 
 js 的加载、解析和执行会阻塞页面的渲染过程，因此我们希望 js 脚本能够尽可能的延迟加载，提高页面的渲染速度
 
-- 将 js 脚本放在文档的底部
-
 - 给 js 脚本添加 defer 属性
 
 - 给 js 脚本添加 async 属性
 
 - 对文档的加载事件进行监听，当文档加载完成后再动态的创建 script 标签来引入 js 脚本
 
+- XmlHttpRequest 脚本注入
+
+- 异步加载库 LABjs、模块加载器 Sea.js
+
+---
+
+<span id="jump5"></span>
+
+## script的defer和async
+
+两者与未添加该属性的script的共同区别是，script文件下载时不会阻塞html解析
+
+defer：并行加载 js 文件，等待所有文件均下载完后，才按照页面上 script 标签的顺序执行
+
+async：并行加载 js 文件，下载完成立即执行，不会按照页面上 script 标签的顺序执行
