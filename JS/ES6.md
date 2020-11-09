@@ -18,11 +18,17 @@
 
 [async 和 await](#jump8)
 
-[ES Module 与 CommonJS 的区别](#jump9)
+[私有方法和私有属性](#jump9)
 
-[私有方法和私有属性](#jump10)
+[Generator ](#jump10)
 
-[Generator ](#jump11)
+[ES6对几种基本数据类型做的常用升级优化](#jump11)
+
+[](#jump)
+
+[](#jump)
+
+[](#jump)
 
 ---	
 
@@ -215,21 +221,7 @@ await 就是 generator 加上 Promise 的语法糖，且内部实现了自动执
 
 ---
 
-<span id="jump"></span>
-
-## ES Module 与 CommonJS 的区别
-
-- CommonJS 支持动态导入，也就是 require(${path}/xx.js)，后者目前不支持
-
-- CommonJS 是同步导入，因为用于服务端，文件都在本地；而后者是异步导入，因为用于浏览器，需要下载文件
-
-- CommonJS 在导出时是浅拷贝，所以如果想更新值，必须重新导入一次； ES Module 采用实时绑定的方式，导入导出的值都指向同一个内存地址，所以导入值会跟随导出值变化
-
-- ES Module 会编译成 require/exports 来执行的
-
----
-
-<span id="jump10"></span>
+<span id="jump9"></span>
 
 ## 私有方法和私有属性
 
@@ -299,7 +291,7 @@ function bar(baz) {
 
 ---
 
-<span id="jump11"></span>
+<span id="jump10"></span>
 
 ## Generator
 
@@ -379,3 +371,57 @@ b.next() // { value:6, done:false }
 b.next(12) // { value:8, done:false }; 相当于把```yield (x + 1)```换成```12```，因此y = 2 * (12)
 b.next(13) // { value:42, done:true }; 相当于把```yield (y / 3)```换成```13```，因此z = 13
 ```
+
+---
+
+<span id="jump11"></span>
+
+## ES6对几种基本数据类型做的常用升级优化
+
+### String
+
+#### 优化部分
+
+- 字符串模板
+
+#### 升级部分
+
+- 在String原型上新增了includes()方法，用于取代传统的只能用indexOf查找包含字符的方法(
+
+- 还新增了startsWith(), endsWith(), padStart(),padEnd(),repeat()等方法
+
+### Array
+
+#### 优化部分
+
+- 数组解构赋值
+
+- 扩展运算符
+
+#### 升级部分
+
+- 在rray原型上新增了find()方法，用于取代传统的只能用indexOf查找包含数组项目的方法
+
+- 还新增了copyWithin(), includes(), fill(),flat()等方法
+
+### Number
+
+#### 优化部分
+
+- 在Number原型上新增了isFinite(), isNaN()方法，用来取代ES5的会先将非数值类型的参数转化为Number类型再做判断的isFinite(), isNaN()
+
+#### 升级部分
+
+- 在Math对象上新增了Math.cbrt()，trunc()，hypot()等等较多的科学计数法运算方法
+
+### Object
+
+#### 优化部分
+
+- 对象属性变量式声明
+
+- 对象的解构赋值
+
+- 对象的扩展运算符(...)
+
+#### 优化部分

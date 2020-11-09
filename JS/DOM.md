@@ -32,6 +32,14 @@
 
 [attribute 和 property 的区别是什么？](#jump15)
 
+[写一个通用的事件侦听器函数](#jump16)
+
+[](#jump)
+
+[](#jump)
+
+[](#jump)
+
 [](#jump)
 
 [](#jump)
@@ -309,3 +317,56 @@ property 就是 dom 元素在 js 中作为对象拥有的属性。
 对于 html 的标准属性来说，attribute 和 property 是同步的，是会自动更新的
 
 但是对于自定义的属性来说，他们是不同步的
+
+---
+
+<span id="jump16"></span>
+
+## 写一个通用的事件侦听器函数
+
+```javascript
+var EventUtil = {
+    getEvent: function (event) {
+        return event || window.event;
+    },
+    getTarget: function (event) {
+        return event.target || event.srcElement;
+    },
+    // 返回注册成功的监听器，IE中需要使用返回值来移除监听器
+    on: function (elem, type, handler) {
+        if (elem.addEventListener) {
+            elem.addEventListener(type, handler, false);
+            return handler;
+        } else if (elem.attachEvent) {
+            var wrapper = function () {
+              var event = window.event;
+              event.target = event.srcElement;
+              handler.call(elem, event);
+            };
+            elem.attachEvent('on' + type, wrapper);
+            return wrapper;
+        }
+    },
+    off: function (elem, type, handler) {
+        if (elem.removeEventListener) {
+            elem.removeEventListener(type, handler, false);
+        } else if (elem.detachEvent) {
+            elem.detachEvent('on' + type, handler);
+        }
+    },
+    preventDefault: function (event) {
+        if (event.preventDefault) {
+            event.preventDefault();
+        } else if ('returnValue' in event) {
+            event.returnValue = false;
+        }
+    },
+    stopPropagation: function (event) {
+        if (event.stopPropagation) {
+            event.stopPropagation();
+        } else if ('cancelBubble' in event) {
+            event.cancelBubble = true;
+        }
+    }
+};
+```
