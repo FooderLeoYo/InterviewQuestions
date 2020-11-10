@@ -24,7 +24,21 @@
 
 [ES6对几种基本数据类型做的常用升级优化](#jump11)
 
-[](#jump)
+[Symbol是什么，有什么作用？](#jump12)
+
+[Set是什么，有什么作用？](#jump13)
+
+[Map是什么，有什么作用？](#jump14)
+
+[Proxy是什么，有什么作用？](#jump15)
+
+[Reflect是什么，有什么作用？](#jump16)
+
+[Iterator是什么，有什么作用？(重要)](#jump17)
+
+[for...in 和for...of有什么区别？](#jump18)
+
+[Object.is() 与原来的比较操作符 ===、== 的区别？](#jump19)
 
 [](#jump)
 
@@ -414,14 +428,127 @@ b.next(13) // { value:42, done:true }; 相当于把```yield (y / 3)```换成```1
 
 - 在Math对象上新增了Math.cbrt()，trunc()，hypot()等等较多的科学计数法运算方法
 
-### Object
+### Object（重要）
 
 #### 优化部分
-
-- 对象属性变量式声明
 
 - 对象的解构赋值
 
 - 对象的扩展运算符(...)
 
+- super 关键字
+
+#### 升级部分
+
+- 在Object原型上新增了is()方法，做两个目标对象的相等比较，用来完善'==='方法
+
+- 在Object原型上新增了assign()方法，用于对象新增属性或者多个对象合并
+
+- 在Object原型上新增了getOwnPropertyDescriptors()方法，结合defineProperties()方法，可以完美复制对象
+
+- 在Object原型上新增了getPrototypeOf()和setPrototypeOf()方法，用来获取或设置当前对象的prototype对象
+
+- 在Object原型上还新增了Object.keys()，Object.values()，Object.entries()方法
+
+### Function
+
 #### 优化部分
+
+- 箭头函数
+
+#### 升级部分
+
+- 双冒号运算符，用来取代以往的bind，call,和apply(浏览器暂不支持，Babel已经支持转码)
+
+```javascript
+foo::bar;
+// 等同于
+bar.bind(foo);
+
+foo::bar(...arguments);
+// 等同于
+bar.apply(foo, arguments);
+```
+
+---
+
+<span id="jump12"></span>
+
+## Symbol是什么，有什么作用
+
+- 是ES6新引入的原始数据类型
+
+- 所有Symbol()生成的值都是独一无二的，可以从根本上解决对象属性太多导致属性名冲突覆盖的问题
+
+---
+
+<span id="jump13"></span>
+
+## Set是什么，有什么作用？
+
+- Set是ES6引入的一种类似Array的新的数据结构，Set实例的成员类似于数组item成员
+
+- 区别是Set实例的成员都是唯一，不重复的，这个特性可以轻松地实现数组去重
+
+---
+
+<span id="jump14"></span>
+
+## Map是什么，有什么作用？
+
+- 是ES6引入的一种类似Object的新的数据结构，Map可以理解为是Object的超集
+
+- 打破了以传统键值对形式定义对象，对象的key不再局限于字符串，也可以是Object，可以更加全面的描述对象的属性
+
+---
+
+<span id="jump15"></span>
+
+## Proxy是什么，有什么作用？
+
+- 是ES6新增的一个构造函数，可以理解为JS语言的一个代理
+
+- 用来改变JS默认的一些语言行为，包括拦截默认的get/set等底层方法，使得JS的使用自由度更高
+
+---
+
+<span id="jump16"></span>
+
+## Reflect是什么，有什么作用？
+
+- 将原生的一些零散分布在Object、Function或者全局函数里的方法(如apply、delete、get、set等等)，统一整合到Reflect上，这样可以更加方便更加统一的管理一些原生API
+
+- 因为Proxy可以改写默认的原生API，如果一旦原生API别改写可能就找不到了，所以Reflect也可以起到备份原生API的作用
+
+---
+
+<span id="jump17"></span>
+
+## Iterator是什么，有什么作用？(重要)
+
+- 因为ES6新增了Set、Map类型，他们和Array、Object类型很像，但是都不能用for循环遍历。ES6也就顺其自然的需要一种设计标准，来统一所有可遍历类型的遍历方式，Iterator正是这样一种标准
+
+Iterator标准规定，所有部署了key值为[Symbol.iterator]，且[Symbol.iterator]的value是标准的Iterator接口函数的对象，都称之为可遍历对象
+
+---
+
+<span id="jump18"></span>
+
+## for...in 和for...of有什么区别？
+
+ES6统一了遍历标准，制定了可遍历对象Iterator，而遍历则采用for...of去遍历
+
+所有部署了Iterator接口的对象(可遍历对象)都可以通过for...of去遍历，而for..in仅仅可以遍历对象
+
+---
+
+<span id="jump19"></span>
+
+## Object.is() 与原来的比较操作符 ===、== 的区别？
+
+- == 相等运算符，比较时会自动进行数据类型转换
+
+- === 严格相等运算符，比较时不进行隐式类型转换
+
+- Object.is 同值相等算法，在 === 基础上对 0 和 NaN 特别处理
+

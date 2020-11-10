@@ -72,7 +72,13 @@
 
 ## 如何最小化重绘(repaint)和回流(reflow)
 
+- 使用 visibility: hidden 替换 display: none 
+
 - 需要要对元素进行复杂的操作时，可以先隐藏(display:"none")，操作完成后再显示
+
+- 将频繁运行的动画变为图层，图层能够阻止该节点回流影响别的元素
+
+- 动画实现的速度的选择：动画速度越快，回流次数越多
 
 - 需要创建多个 DOM 节点时，使用 DocumentFragment 创建完后一次性的加入 document
 
